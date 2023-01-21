@@ -10,6 +10,7 @@ class StackWidget extends StatelessWidget {
     required  humidity,
     required  pressure,
     required  cityName,
+    required this.icons,
   }) : _temp = temp, _wind = wind, _humidity = humidity, _pressure = pressure, _cityName = cityName, super(key: key);
 
   final _temp;
@@ -17,6 +18,7 @@ class StackWidget extends StatelessWidget {
   final  _humidity;
   final  _pressure;
   final  _cityName;
+  final String icons;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class StackWidget extends StatelessWidget {
           top: 130,
           left: 160,
           child: Text(
-            '🌦  ',
+            icons,
             style: TextStyle(fontSize:200, color: AppColors.white,fontWeight: FontWeight.bold),
           ),
         ),

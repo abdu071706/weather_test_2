@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:weather_test_2/data/widget/geo_locaation.dart';
 import 'package:weather_test_2/data/widget/stack_widget.dart';
 import 'package:weather_test_2/ui/search_page.dart';
+import 'package:weather_test_2/weather_utils.dart';
 
 
 
@@ -23,6 +24,7 @@ class _HomeUiState extends State<HomeUi> {
   dynamic _pressure = '';
   dynamic _feels_like = '';
   dynamic _wind;
+  String _icon = '';
 
   @override
   void initState() {
@@ -48,7 +50,9 @@ class _HomeUiState extends State<HomeUi> {
       _humidity = maalymat['main']['humidity'];
       _pressure = maalymat['main']['pressure'];
       _wind = maalymat['wind']['speed'];
-      _temp = (kelvin - 273.15).toStringAsFixed(0);
+      final temp = WeatherUtil.kelvinToCelcius(kelvin);
+      _temp = temp;
+      _icon = WeatherUtil.getWeatherIcon(kelvin);
 
       setState(() {});
       return maalymat;
@@ -70,14 +74,17 @@ class _HomeUiState extends State<HomeUi> {
         _pressure = jsonData['main']['pressure'];
         _wind = jsonData['wind']['speed'];
         _cityName = jsonData['name'];
-        _temp = (kelvin - 273.15).toStringAsFixed(0);
+        final temp = WeatherUtil.kelvinToCelcius(kelvin);
+      _temp = temp;
+_icon = WeatherUtil.getWeatherIcon(kelvin);
         setState(() {
-          ;
+          
+
         });
       }
     } catch (error) {
       setState(() {
-        ;
+        
       });
       throw Exception(error);
     }
@@ -119,7 +126,9 @@ class _HomeUiState extends State<HomeUi> {
           wind: _wind,
           humidity: _humidity,
           pressure: _pressure,
-          cityName: _cityName),
+          cityName: _cityName,
+          icons: _icon,
+          ),
     );
   }
 }
